@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hero Zero - Kompendium Kryjówki Superzłoczyńców 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hzBlue: {
+                            light: '#38bdf8',
+                            DEFAULT: '#0284c7',
+                            dark: '#0369a1',
+                            deep: '#0b1329'
+                        },
+                        hzYellow: {
+                            light: '#fef08a',
+                            DEFAULT: '#facc15',
+                            dark: '#ca8a04'
+                        },
+                        hzPink: {
+                            DEFAULT: '#ec4899',
+                            dark: '#be185d'
+                        },
+                        hzPurple: {
+                            DEFAULT: '#a855f7',
+                            dark: '#7e22ce'
+                        },
+                        hzGreen: {
+                            DEFAULT: '#22c55e',
+                            dark: '#15803d'
+                        }
+                    },
+                    fontFamily: {
+                        comic: ['"Luckiest Guy"', 'cursive', 'sans-serif'],
+                        sans: ['Montserrat', 'sans-serif']
+                    },
+                    boxShadow: {
+                        comic: '4px 4px 0px #000000',
+                        'comic-lg': '6px 6px 0px #000000',
+                        'comic-sm': '2px 2px 0px #000000',
+                        'glow-pink': '0 0 20px rgba(236, 72, 153, 0.5)',
+                        'glow-yellow': '0 0 20px rgba(250, 204, 21, 0.5)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .text-stroke-black {
+            -webkit-text-stroke: 1.5px #000000;
+            paint-order: stroke fill;
+        }
+        .text-stroke-thick {
+            -webkit-text-stroke: 2.5px #000000;
+            paint-order: stroke fill;
+        }
+        .comic-card {
+            border: 3px solid #000000;
+            box-shadow: 4px 4px 0px #000000;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        #donutsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+        /* Mobile tap highlight reset */
+        button, a, input, select {
+            min-height: 44px;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1329;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #facc15;
+            border-radius: 4px;
+            border: 2px solid #000000;
+        }
+    </style>
+</head>
+<body class="bg-hzBlue-deep text-slate-100 font-sans min-h-screen relative overflow-x-hidden pb-16">
+
+    <!-- Canvas z pływającymi pączkami -->
+    <canvas id="donutsCanvas"></canvas>
+
+    <!-- Pasek Nawigacyjny Sticky -->
+    <header class="sticky top-0 z-50 bg-slate-950/95 border-b-4 border-black backdrop-blur-md shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-hzYellow border-2 border-black flex items-center justify-center text-xl shadow-comic group-hover:rotate-12 transition-transform">
+                    🍩
+                </div>
+                <div>
+                    <h1 class="font-comic text-lg sm:text-xl text-hzYellow text-stroke-black leading-none">
+                        HERO ZERO: KRYJÓWKA
+                    </h1>
+                    <span class="text-[10px] font-extrabold text-hzPink uppercase tracking-widest block">SUPERVILLAIN MEGA-GUIDE 2026</span>
+                </div>
+            </a>
+
+            <!-- Menu Desktop -->
+            <nav class="hidden lg:flex items-center gap-2 text-xs font-bold">
+                <a href="#quizy" class="px-3 py-2 rounded-xl bg-hzYellow text-black border-2 border-black shadow-comic-sm hover:scale-105 transition-transform flex items-center gap-1.5">
+                    <i class="fa-solid fa-graduation-cap"></i> Baza Quizów
+                </a>
+                <a href="#kalkulator" class="px-3 py-2 rounded-xl bg-slate-800 text-hzYellow border-2 border-black shadow-comic-sm hover:bg-slate-700 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator"></i> Symulator HP
+                </a>
+                <a href="#drzewo-decyzyjne" class="px-3 py-2 rounded-xl bg-slate-800 text-hzPink border-2 border-black shadow-comic-sm hover:bg-slate-700 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-sitemap"></i> Decyzje Pokoje
+                </a>
+                <a href="#skrzynie" class="px-3 py-2 rounded-xl bg-slate-800 text-hzPurple border-2 border-black shadow-comic-sm hover:bg-slate-700 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-box-open"></i> Skrzynie & Mody
+                </a>
+                <a href="#tracker" class="px-3 py-2 rounded-xl bg-hzGreen text-black border-2 border-black shadow-comic-sm hover:scale-105 transition-transform flex items-center gap-1.5">
+                    <i class="fa-solid fa-list-check"></i> Tracker & Checklist
+                </a>
+            </nav>
+
+            <!-- Przycisk Mobilny Menu -->
+            <button id="mobileMenuBtn" aria-label="Otwórz menu" class="lg:hidden w-11 h-11 bg-hzYellow text-black font-black text-xl rounded-xl border-2 border-black shadow-comic flex items-center justify-center active:scale-95">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Panel Nawigacji Mobilnej -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-slate-900/98 border-t-2 border-black p-4 space-y-2 text-sm font-bold shadow-2xl">
+            <a href="#quizy" class="mobile-nav-link flex items-center gap-3 p-3 bg-hzYellow text-black rounded-xl border-2 border-black">
+                <i class="fa-solid fa-graduation-cap text-lg"></i> Baza Quizów i Odpowiedzi
+            </a>
+            <a href="#kalkulator" class="mobile-nav-link flex items-center gap-3 p-3 bg-slate-800 text-hzYellow rounded-xl border-2 border-black">
+                <i class="fa-solid fa-calculator text-lg"></i> Symulator HP i Staminy
+            </a>
+            <a href="#drzewo-decyzyjne" class="mobile-nav-link flex items-center gap-3 p-3 bg-slate-800 text-hzPink rounded-xl border-2 border-black">
+                <i class="fa-solid fa-sitemap text-lg"></i> Taktyczne Drzewo Decyzyjne
+            </a>
+            <a href="#skrzynie" class="mobile-nav-link flex items-center gap-3 p-3 bg-slate-800 text-hzPurple rounded-xl border-2 border-black">
+                <i class="fa-solid fa-box-open text-lg"></i> Skrzynie, Karty & Mody
+            </a>
+            <a href="#tracker" class="mobile-nav-link flex items-center gap-3 p-3 bg-hzGreen text-black rounded-xl border-2 border-black">
+                <i class="fa-solid fa-list-check text-lg"></i> Tracker Postępu & Checklist
+            </a>
+            <a href="#f2p-vs-p2w" class="mobile-nav-link flex items-center gap-3 p-3 bg-slate-800 text-slate-200 rounded-xl border-2 border-black">
+                <i class="fa-solid fa-coins text-lg"></i> Strategie F2P vs Donuty
+            </a>
+        </div>
+    </header>
+
+    <!-- Główny Kontener Treści -->
+    <main class="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-12">
+
+        <!-- BANNER HERO -->
+        <section class="relative bg-gradient-to-br from-hzBlue-dark via-slate-900 to-slate-950 border-4 border-black rounded-3xl p-5 sm:p-8 md:p-10 shadow-comic-lg overflow-hidden">
+            <div class="absolute -right-8 -bottom-8 opacity-15 text-[150px] sm:text-[220px] select-none pointer-events-none">🍩</div>
+            <div class="max-w-3xl space-y-4 relative z-10">
+                <div class="inline-flex items-center gap-2 bg-hzPink text-white font-black px-3.5 py-1 rounded-full border-2 border-black text-xs uppercase tracking-wider shadow-comic-sm">
+                    <i class="fa-solid fa-fire"></i> Kompendium Silnika 2026
+                </div>
+                <h1 class="font-comic text-3xl sm:text-5xl md:text-6xl text-hzYellow text-stroke-thick leading-none tracking-wide">
+                    KRYJÓWKA SUPERŁOTRÓW
+                </h1>
+                <p class="text-slate-200 text-sm sm:text-base leading-relaxed font-medium">
+                    Przeanalizowana na 1000%! Kompletne baza odpowiedzi na pytania quizowe, symulatory matematyczne zdrowia, kalkulatory regeneracji, tabele lootu oraz interaktywny tracker 100 pięter.
+                </p>
+
+                <!-- Pasek szybkiego wyszukiwania w bannerze -->
+                <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-hzYellow text-lg"></i>
+                        <input type="text" id="heroSearchInput" placeholder="Szybki quiz (np. Amelia, zapałki, skarpetki)..." 
+                            class="w-full pl-11 pr-4 py-3 bg-slate-950/90 border-2 border-black text-white text-sm font-semibold rounded-2xl focus:outline-none focus:border-hzYellow shadow-inner">
+                    </div>
+                    <a href="#quizy" class="px-5 py-3 bg-hzYellow text-black font-comic text-base rounded-2xl border-2 border-black shadow-comic hover:bg-hzYellow-light transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> Odpowiedzi
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SEKCJA 1: BAZA PYTAŃ QUIZOWYCH (NAJWAŻNIEJSZE) -->
+        <section id="quizy" class="space-y-5 scroll-mt-20">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b-2 border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-hzYellow text-black border-2 border-black shadow-comic flex items-center justify-center font-comic text-2xl">
+                        ❓
+                    </div>
+                    <div>
+                        <h2 class="font-comic text-2xl sm:text-3xl text-hzYellow text-stroke-black">BAZA ODPOWIEDZI QUIZOWYCH</h2>
+                        <p class="text-slate-400 text-xs sm:text-sm">Błyskawiczna wyszukiwarka – uniknij utraty HP na panelach!</p>
+                    </div>
+                </div>
+
+                <!-- Filtry złoczyńców -->
+                <div class="flex flex-wrap gap-1.5" id="villainFilters">
+                    <button data-filter="all" class="villain-btn active px-3 py-1.5 bg-hzYellow text-black border-2 border-black rounded-xl font-bold text-xs shadow-comic-sm">Wszyscy</button>
+                    <button data-filter="noctura" class="villain-btn px-3 py-1.5 bg-slate-800 text-hzPink border-2 border-black rounded-xl font-bold text-xs shadow-comic-sm">Dr Noctura</button>
+                    <button data-filter="profesor" class="villain-btn px-3 py-1.5 bg-slate-800 text-hzYellow border-2 border-black rounded-xl font-bold text-xs shadow-comic-sm">Prof. O. No</button>
+                    <button data-filter="klaus" class="villain-btn px-3 py-1.5 bg-slate-800 text-hzBlue-light border-2 border-black rounded-xl font-bold text-xs shadow-comic-sm">Klaus Yoyodyne</button>
+                    <button data-filter="general" class="villain-btn px-3 py-1.5 bg-slate-800 text-hzGreen border-2 border-black rounded-xl font-bold text-xs shadow-comic-sm">Inne / Ogólne</button>
+                </div>
+            </div>
+
+            <!-- Pole wyszukiwania quizu -->
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+                <input type="text" id="quizSearchInput" placeholder="Szukaj pytania lub słowa kluczowego (np. wzrost, skarpetki, kolędy, sernik)..." 
+                    class="w-full pl-12 pr-10 py-3.5 bg-slate-900 border-3 border-black text-white font-semibold text-sm rounded-2xl focus:outline-none focus:border-hzYellow shadow-comic">
+                <button id="clearQuizSearch" class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 text-slate-400 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Wyniki Quizów (Grid) -->
+            <div id="quizContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <!-- Karty quizowe ładowane dynamicznie z JS -->
+            </div>
+        </section>
+
+
+        <!-- SEKCJA 2: MECHANIKA HP I SYMULATOR STAMINY -->
+        <section id="kalkulator" class="space-y-6 scroll-mt-20">
+            <div class="flex items-center gap-3 border-b-2 border-slate-800 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-hzBlue text-white border-2 border-black shadow-comic flex items-center justify-center font-comic text-2xl">
+                    📊
+                </div>
+                <div>
+                    <h2 class="font-comic text-2xl sm:text-3xl text-hzYellow text-stroke-black">SYMULATOR STAMINY & KALKULATOR HP</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Matematyka regeneracji zdrowia oraz wyliczenia kosztów</p>
+                </div>
+            </div>
+
+            <!-- Złota Zasada Blokady HP (Infografika) -->
+            <div class="bg-gradient-to-r from-red-950/90 via-slate-900 to-slate-950 border-3 border-hzPink rounded-2xl p-4 sm:p-6 shadow-comic space-y-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">🔒</span>
+                    <h3 class="font-comic text-xl text-hzYellow text-stroke-black">ZŁOTA ZASADA BLOKADY ZDROWIA (LOCKED STATS)</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                    Zdrowie w Kryjówce kalkulowane jest <strong>JEDNORAZOWO w chwili pierwszego otwarcia wydarzenia</strong> na podstawie Twojej aktualnej Wytrzymałości (Staminy).
+                </p>
+
+                <!-- Os czasu / Proces blokady -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 text-xs">
+                    <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-hzYellow text-black font-black flex items-center justify-center shrink-0">1</span>
+                        <span>Załóż Max Staminę + Booster 25%</span>
+                    </div>
+                    <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-hzPink text-white font-black flex items-center justify-center shrink-0">2</span>
+                        <span>Kliknij "Wejdź" do Kryjówki (HP Zablokowane)</span>
+                    </div>
+                    <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-hzGreen text-black font-black flex items-center justify-center shrink-0">3</span>
+                        <span>Załóż zestaw pod Kryta/Siłę na walki</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interaktywny Kalkulator -->
+            <div class="bg-slate-900 border-3 border-black rounded-3xl p-4 sm:p-6 shadow-comic-lg grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Lewa kolumna: Dane wejściowe -->
+                <div class="space-y-4">
+                    <h3 class="font-comic text-lg text-hzYellow flex items-center gap-2 border-b border-slate-800 pb-2">
+                        <i class="fa-solid fa-sliders text-hzBlue-light"></i> Parametry Postaci
+                    </h3>
+
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div>
+                            <label class="block font-bold text-slate-300 mb-1">Twoja bazowa Wytrzymałość (Stamina):</label>
+                            <input type="number" id="calcInputStamina" value="4500" min="100" max="200000" step="100"
+                                class="w-full p-3 bg-slate-950 border-2 border-black rounded-xl text-hzYellow font-bold text-base focus:outline-none focus:border-hzYellow">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block font-bold text-slate-300 mb-1">Booster Kondycji:</label>
+                                <select id="calcInputBooster" class="w-full p-3 bg-slate-950 border-2 border-black rounded-xl text-white font-bold focus:outline-none focus:border-hzYellow">
+                                    <option value="1.0">Brak (0%)</option>
+                                    <option value="1.1">Mały (10%)</option>
+                                    <option value="1.25" selected>Duży (25%)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-300 mb-1">Bonus Gildii:</label>
+                                <select id="calcInputGuild" class="w-full p-3 bg-slate-950 border-2 border-black rounded-xl text-white font-bold focus:outline-none focus:border-hzYellow">
+                                    <option value="1.0">0%</option>
+                                    <option value="1.05">5%</option>
+                                    <option value="1.1" selected>10% (Max)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between font-bold text-slate-300 mb-1">
+                                <span>Aktualny poziom zdrowia w kryjówce:</span>
+                                <span id="sliderHpText" class="text-hzPink font-black">35% HP</span>
+                            </div>
+                            <input type="range" id="sliderHp" min="0" max="100" value="35" class="w-full accent-hzYellow cursor-pointer h-3 bg-slate-950 rounded-lg">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-300 mb-1">Przedział Pięter (dla wyceny reanimacji):</label>
+                            <select id="calcInputFloorRange" class="w-full p-3 bg-slate-950 border-2 border-black rounded-xl text-white font-bold focus:outline-none focus:border-hzYellow">
+                                <option value="1">Piętra 1 - 25 (Tanie)</option>
+                                <option value="2" selected>Piętra 26 - 60 (Średnie)</option>
+                                <option value="3">Piętra 61 - 85 (Wysokie)</option>
+                                <option value="4">Piętra 86 - 100 (Endgame)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prawa kolumna: Wyliczone Wyniki -->
+                <div class="bg-slate-950 p-4 sm:p-5 rounded-2xl border-2 border-black space-y-4 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-comic text-lg text-hzGreen flex items-center gap-2 border-b border-slate-800 pb-2 mb-3">
+                            <i class="fa-solid fa-chart-pie"></i> Wyliczone Parametry PŻ
+                        </h3>
+
+                        <div class="space-y-3 text-xs sm:text-sm">
+                            <div class="flex justify-between items-center bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 font-semibold">Całkowita Efektywna Stamina:</span>
+                                <span id="resTotalStamina" class="font-comic text-base text-hzYellow">6,188</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 font-semibold">Maksymalne Zdrowie w Kryjówce:</span>
+                                <span id="resMaxHp" class="font-comic text-lg text-hzGreen text-stroke-black">61,875 HP</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 font-semibold">Brakujące HP do 100%:</span>
+                                <span id="resMissingHp" class="font-bold text-hzPink">40,219 HP</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 font-semibold">Tempo Regeneracji Pasywnej:</span>
+                                <span id="resRegenSpeed" class="font-bold text-slate-200">10% max HP / godz.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Podsumowanie czasu i oponek -->
+                    <div class="bg-slate-900 p-3.5 rounded-xl border-2 border-black space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-slate-300 font-bold"><i class="fa-regular fa-clock text-hzYellow mr-1"></i> Czas pełnej regeneracji:</span>
+                            <span id="resTimeNeeded" class="font-comic text-base text-hzYellow">6 godz. 30 min.</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-800">
+                            <span class="text-xs text-slate-300 font-bold"><i class="fa-solid fa-cookie text-hzPink mr-1"></i> Koszt leczenia oponkami:</span>
+                            <span id="resDonutCost" class="font-comic text-lg text-hzPink flex items-center gap-1">
+                                <span id="resDonutsVal">12</span> 🍩
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SEKCJA 3: DRZEWO DECYZYJNE POKOI -->
+        <section id="drzewo-decyzyjne" class="space-y-5 scroll-mt-20">
+            <div class="flex items-center gap-3 border-b-2 border-slate-800 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-hzPink text-white border-2 border-black shadow-comic flex items-center justify-center font-comic text-2xl">
+                    🧠
+                </div>
+                <div>
+                    <h2 class="font-comic text-2xl sm:text-3xl text-hzYellow text-stroke-black">TAKTYCZNE DRZEWO DECYZYJNE</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Wybierz pokój i stan HP, aby otrzymać natychmiastową radę taktyczną</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border-3 border-black rounded-3xl p-5 shadow-comic space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Krok 1: Typ Pokoju -->
+                    <div class="space-y-2">
+                        <label class="block font-comic text-sm text-hzYellow">1. Wybierz napotkany pokój:</label>
+                        <select id="treeRoomType" class="w-full p-3 bg-slate-950 border-2 border-black rounded-xl text-white font-bold text-sm focus:outline-none focus:border-hzYellow">
+                            <option value="minion">🦹 Standardowy Poplecznik</option>
+                            <option value="elite">😈 Elitarny Poplecznik (Trudny)</option>
+                            <option value="panel">❓ Panel Quizowy / Zagadka</option>
+                            <option value="chest_epic">👑 Skrzynia Epicka (Wymaga Karty)</option>
+                            <option value="chest_common">📦 Skrzynia Zwykła / Drewniana</option>
+                            <option value="boss">👹 Baza Bossa (np. Piętro 50/100)</option>
+                        </select>
+                    </div>
+
+                    <!-- Krok 2: Poziom Zdrowia -->
+                    <div class="space-y-2">
+                        <label class="block font-comic text-sm text-hzYellow">2. Aktualny stan Twojego HP:</label>
+                        <select id="treeHpState" class="w-full p-3 bg-slate-950 border-2 border-black rounded-xl text-white font-bold text-sm focus:outline-none focus:border-hzYellow">
+                            <option value="low">🚨 Niskie HP (< 30% PŻ) - Strefa Zagrożenia</option>
+                            <option value="medium" selected>⚠️ Średnie HP (30% - 70% PŻ)</option>
+                            <option value="high">💚 Wysokie HP (> 70% PŻ) - Pełna Gotowość</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Wynik Taktyczny Box -->
+                <div id="treeResultBox" class="bg-slate-950 border-2 border-black p-4 sm:p-5 rounded-2xl space-y-2">
+                    <!-- Dynamiczny wynik z JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SEKCJA 4: SKRZYNIE, KARTY I MODYFIKACJE LEGENDARNE -->
+        <section id="skrzynie" class="space-y-5 scroll-mt-20">
+            <div class="flex items-center gap-3 border-b-2 border-slate-800 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-hzPurple text-white border-2 border-black shadow-comic flex items-center justify-center font-comic text-2xl">
+                    🎁
+                </div>
+                <div>
+                    <h2 class="font-comic text-2xl sm:text-3xl text-hzYellow text-stroke-black">SKRZYNIE, KARTY & LEGENDA MODÓW</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Analiza lootu, dropu modyfikacji legendarnych i kart dostępu</p>
+                </div>
+            </div>
+
+            <!-- Tabela Skrzyń -->
+            <div class="overflow-x-auto rounded-2xl border-3 border-black shadow-comic bg-slate-900">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-slate-950 text-hzYellow border-b-2 border-black font-comic text-sm">
+                            <th class="p-3">Typ Skrzyni</th>
+                            <th class="p-3">Wymagana Karta</th>
+                            <th class="p-3">Zawartość & Nagrody</th>
+                            <th class="p-3">Rekomendacja</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-slate-200">
+                        <tr class="hover:bg-slate-850">
+                            <td class="p-3 font-bold text-amber-400">📦 Skrzynia Zwykła</td>
+                            <td class="p-3">Brak / Zielona Karta</td>
+                            <td class="p-3">Monety, PD, mała energia, +5% HP</td>
+                            <td class="p-3"><span class="px-2 py-0.5 bg-green-900/60 text-green-300 rounded border border-green-700">Otwieraj zawsze</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-850">
+                            <td class="p-3 font-bold text-blue-400">💎 Skrzynia Srebrna</td>
+                            <td class="p-3">Niebieska Karta Dostępu</td>
+                            <td class="p-3">Dużo PD, przedmioty rzadkie, +15% HP</td>
+                            <td class="p-3"><span class="px-2 py-0.5 bg-blue-900/60 text-blue-300 rounded border border-blue-700">Otwieraj od 40. piętra</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-850">
+                            <td class="p-3 font-bold text-hzPurple">👑 Skrzynia Epicka</td>
+                            <td class="p-3">Złota / Fioletowa Karta</td>
+                            <td class="p-3 font-bold text-hzYellow">Legendary Mods (Modyfikacje), Oponki, Epicki Ekwipunek</td>
+                            <td class="p-3"><span class="px-2 py-0.5 bg-purple-900/60 text-hzPurple rounded border border-purple-700 font-bold">OSZCZĘDZAJ na 80-100!</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modyfikacje Legendarne Gry - Opis -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="bg-slate-900 p-4 rounded-2xl border-2 border-black shadow-comic space-y-1">
+                    <div class="text-2xl">🥋</div>
+                    <h4 class="font-comic text-hzYellow text-base">Mod Stroju (Outfit)</h4>
+                    <p class="text-xs text-slate-300">Zwiększa pancerz lub dodaje szansę na unik w PvP.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-2xl border-2 border-black shadow-comic space-y-1">
+                    <div class="text-2xl">🥾</div>
+                    <h4 class="font-comic text-hzYellow text-base">Mod Butów (Boots)</h4>
+                    <p class="text-xs text-slate-300">Premia do inicjatywy i pierwszej tury ataku.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-2xl border-2 border-black shadow-comic space-y-1">
+                    <div class="text-2xl">🔫</div>
+                    <h4 class="font-comic text-hzYellow text-base">Mod Broni (Weapon)</h4>
+                    <p class="text-xs text-slate-300">Zwiększa obrażenia krytyczne nawet o +25%.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-2xl border-2 border-black shadow-comic space-y-1">
+                    <div class="text-2xl">Gadget 🎒</div>
+                    <h4 class="font-comic text-hzYellow text-base">Mod Gadżetu (Gadget)</h4>
+                    <p class="text-xs text-slate-300">Pasywna regeneracja energii lub statystyk gildyjnych.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SEKCJA 5: TRACKER 100 PIĘTER & CHECKLIST PRZYGOTOWANIE -->
+        <section id="tracker" class="space-y-6 scroll-mt-20">
+            <div class="flex items-center gap-3 border-b-2 border-slate-800 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-hzGreen text-black border-2 border-black shadow-comic flex items-center justify-center font-comic text-2xl">
+                    🎯
+                </div>
+                <div>
+                    <h2 class="font-comic text-2xl sm:text-3xl text-hzYellow text-stroke-black">TRACKER & CHECKLIST PRZYGOTOWANIA</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Zapisuj swój postęp wspinaczki i odznaczaj kroki przed wejściem</p>
+                </div>
+            </div>
+
+            <!-- Checklist przed wejściem -->
+            <div class="bg-slate-900 border-3 border-black rounded-3xl p-4 sm:p-6 shadow-comic space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="font-comic text-lg text-hzYellow">Lista Kontrolna Przed 1. Piętrem:</h3>
+                    <button id="resetChecklistBtn" class="text-xs bg-slate-800 hover:bg-hzPink text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-black transition-colors">
+                        Resetuj
+                    </button>
+                </div>
+                <div id="checklistContainer" class="space-y-2 text-xs sm:text-sm">
+                    <!-- Lista ładowana z JS z localStorage -->
+                </div>
+            </div>
+
+            <!-- Tracker 100 Pięter -->
+            <div class="bg-slate-900 border-3 border-black rounded-3xl p-4 sm:p-6 shadow-comic space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <h3 class="font-comic text-xl text-hzYellow">Postęp Wspinaczki (0 - 100 Piętro):</h3>
+                        <p class="text-xs text-slate-400">Kliknij piętro, na którym obecnie się znajdujesz</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-300">Aktualne Piętro:</span>
+                        <span id="currentFloorBadge" class="font-comic text-2xl text-hzGreen text-stroke-black">1 / 100</span>
+                    </div>
+                </div>
+
+                <!-- Pasek Postępu Procentowy -->
+                <div class="w-full bg-slate-950 border-2 border-black rounded-full h-5 overflow-hidden p-0.5">
+                    <div id="floorProgressBar" class="bg-gradient-to-r from-hzYellow via-hzPink to-hzGreen h-full rounded-full transition-all duration-300" style="width: 1%;"></div>
+                </div>
+
+                <!-- Szybkie Kamienie Milowe -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                    <button data-floor="25" class="milestone-btn p-2 bg-slate-950 hover:bg-slate-800 border-2 border-black rounded-xl text-xs font-bold text-slate-300 flex items-center justify-center gap-1">
+                        🏆 Piętro 25 (Baza 1)
+                    </button>
+                    <button data-floor="50" class="milestone-btn p-2 bg-slate-950 hover:bg-slate-800 border-2 border-black rounded-xl text-xs font-bold text-slate-300 flex items-center justify-center gap-1">
+                        🏆 Piętro 50 (Półmetek)
+                    </button>
+                    <button data-floor="75" class="milestone-btn p-2 bg-slate-950 hover:bg-slate-800 border-2 border-black rounded-xl text-xs font-bold text-slate-300 flex items-center justify-center gap-1">
+                        🏆 Piętro 75 (Epicki Drop)
+                    </button>
+                    <button data-floor="100" class="milestone-btn p-2 bg-slate-950 hover:bg-slate-800 border-2 border-black rounded-xl text-xs font-bold text-hzYellow flex items-center justify-center gap-1">
+                        👑 Piętro 100 (FINAŁ)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SEKCJA 6: STRATEGIE F2P VS P2W (DONUTY) -->
+        <section id="f2p-vs-p2w" class="space-y-5 scroll-mt-20">
+            <div class="flex items-center gap-3 border-b-2 border-slate-800 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-hzYellow text-black border-2 border-black shadow-comic flex items-center justify-center font-comic text-2xl">
+                    ⚖️
+                </div>
+                <div>
+                    <h2 class="font-comic text-2xl sm:text-3xl text-hzYellow text-stroke-black">STRATEGIE: F2P VS DONUT SPEEDRUN</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">Porównanie ścieżki darmowej z inwestycyjną</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- F2P -->
+                <div class="bg-slate-900 border-3 border-black rounded-3xl p-5 shadow-comic space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h3 class="font-comic text-xl text-hzGreen flex items-center gap-2">
+                            🌱 Strategia Cierpliwa (0 Oponek / F2P)
+                        </h3>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 bg-green-950 text-green-400 rounded border border-green-700">100% Darmowa</span>
+                    </div>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-hzGreen font-bold">✓</span>
+                            <span>Graj w cyklach co 3-4 godziny (pozwól HP regenerować się do 100%).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-hzGreen font-bold">✓</span>
+                            <span>Absolutny zakaz odpowiadania na quizy "z pamięci" – zawsze sprawdzaj w naszej bazie!</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-hzGreen font-bold">✓</span>
+                            <span>Nie kupuj kart za oponki. Otwieraj darmowe skrzynie i omijaj trudne walki elitarne.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- P2W / Speedrun -->
+                <div class="bg-slate-900 border-3 border-black rounded-3xl p-5 shadow-comic space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h3 class="font-comic text-xl text-hzYellow flex items-center gap-2">
+                            🍩 Donut Speedrun (Ranking Top 10)
+                        </h3>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 bg-amber-950 text-hzYellow rounded border border-hzYellow">Inwestor</span>
+                    </div>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-hzYellow font-bold">🍩</span>
+                            <span>Używaj oponek na natychmiastowe leczenie TYLKO, gdy goni Cię czas w rankingu.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-hzYellow font-bold">🍩</span>
+                            <span>Kupuj fioletowe/złote karty dostępu wyłącznie dla Epickich Skrzyń na poziomach 85-100.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-hzYellow font-bold">🍩</span>
+                            <span>Wskrzeszaj się po porażce na wyższych piętrach, aby uniknąć bolesnego resetu do 1. piętra.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t-4 border-black bg-slate-950 mt-16 py-8 text-center text-slate-500 text-xs sm:text-sm">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <div class="font-comic text-xl text-hzYellow text-stroke-black">
+                HERO ZERO - KRYJÓWKA SUPERŁOTRÓW 2026 🍩
+            </div>
+            <p>Nieoficjalny, zaawansowany przewodnik i kompendium wiedzy stworzone dla społeczności graczy Hero Zero.</p>
+        </div>
+    </footer>
+
+
+    <!-- SCRIPT APPLICATION LOGIC -->
+    <script>
+        // ==========================================
+        // 1. ANIMOWANE TŁO (DONUTS CANVAS) - ZOPTYMALIZOWANE DLA MOBILES
+        // ==========================================
+        const canvas = document.getElementById('donutsCanvas');
+        const ctx = canvas.getContext('2d');
+        let donuts = [];
+        const donutEmoji = '🍩';
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class FloatingDonut {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 80;
+                this.size = Math.random() * 20 + 14;
+                this.speedY = -(Math.random() * 1.2 + 0.4);
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.6;
+                this.opacity = Math.random() * 0.35 + 0.1;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotSpeed = (Math.random() - 0.5) * 0.02;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) * 0.4;
+                this.rotation += this.rotSpeed;
+                if (this.y < -40) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.font = `${this.size}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(donutEmoji, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function initDonuts() {
+            donuts = [];
+            // Mniejsza gęstość na mobilkach dla płynności
+            const isMobile = window.innerWidth < 768;
+            const count = isMobile ? 12 : 30;
+            for (let i = 0; i < count; i++) {
+                const d = new FloatingDonut();
+                d.y = Math.random() * canvas.height;
+                donuts.push(d);
+            }
+        }
+
+        function animateDonuts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            donuts.forEach(d => {
+                d.update();
+                d.draw();
+            });
+            requestAnimationFrame(animateDonuts);
+        }
+        initDonuts();
+        animateDonuts();
+
+
+        // ==========================================
+        // 2. KOMPLETNA BAZA DANYCH QUIZOWYCH (2026 ENGINE)
+        // ==========================================
+        const quizDatabase = [
+            // PROFESOR O. NO
+            {
+                q: "Jaki był pierwszy wynalazek Profesora O. No?",
+                a: "Bezpieczne zapałki ognioodporne",
+                villain: "profesor",
+                icon: "🔥"
+            },
+            {
+                q: "Jak ma na imię złota rybka Profesora O. No?",
+                a: "On NIE ma złotej rybki (podchwytliwe!)",
+                villain: "profesor",
+                icon: "🐟"
+            },
+            {
+                q: "Dlaczego Profesor O. No dręczy i terroryzuje świat?",
+                a: "Bo po prostu się nudzi i szuka rozrywki",
+                villain: "profesor",
+                icon: "😈"
+            },
+            {
+                q: "Ulubione hobby / rozrywka Profesora O. No?",
+                a: "Lip-syncing (podkładanie głosu) do dokumentów o zwierzętach",
+                villain: "profesor",
+                icon: "🎬"
+            },
+            {
+                q: "Nietypowa cecha fizyczna Profesora O. No?",
+                a: "Namalowane / dorysowane brwi",
+                villain: "profesor",
+                icon: "🤨"
+            },
+            {
+                q: "Ulubiony talizman na szczęście Profesora?",
+                a: "Bokserki z motywem misia",
+                villain: "profesor",
+                icon: "🩲"
+            },
+            {
+                q: "Ulubiony sport Profesora O. No?",
+                a: "Tenis!",
+                villain: "profesor",
+                icon: "🎾"
+            },
+            {
+                q: "Jakiej muzyki słucha Profesor O. No?",
+                a: "Polka oraz Death Metal!",
+                villain: "profesor",
+                icon: "🎸"
+            },
+            {
+                q: "Gdzie Profesor O. No najchętniej spędza urlop?",
+                a: "W swoim warsztacie do majsterkowania / man cave",
+                villain: "profesor",
+                icon: "🛠️"
+            },
+            {
+                q: "Młodzieńcza, potajemna rozrywka Profesora?",
+                a: "Potajemne wrzucanie kostek rosołowych do filiżanek z herbatą",
+                villain: "profesor",
+                icon: "☕"
+            },
+            {
+                q: "Ulubione danie / deser Profesora O. No?",
+                a: "Sernik truskawkowy (Strawberry Cheesecake)",
+                villain: "profesor",
+                icon: "🍰"
+            },
+
+            // DR NOCTURA (AMELIA DARKWOOD)
+            {
+                q: "Jakie jest cywilne imię i nazwisko Dr Noctury?",
+                a: "Amelia Darkwood",
+                villain: "noctura",
+                icon: "🦇"
+            },
+            {
+                q: "Dlaczego Dr Noctura stała się zła?",
+                a: "Przez teatrzyk lalek / grę o złoczyńcach w skarpetkach",
+                villain: "noctura",
+                icon: "🎭"
+            },
+            {
+                q: "Ulubione kolory Dr Noctury?",
+                a: "Różowy oraz fioletowy",
+                villain: "noctura",
+                icon: "🎨"
+            },
+            {
+                q: "Kolor włosów Dr Noctury?",
+                a: "Ciemnofioletowy",
+                villain: "noctura",
+                icon: "💇‍♀️"
+            },
+            {
+                q: "Ulubiona część garderoby Dr Noctury?",
+                a: "Skarpetki",
+                villain: "noctura",
+                icon: "🧦"
+            },
+            {
+                q: "Co noszą poddani Dr Noctury na jej cześć?",
+                a: "Różowe skarpetki",
+                villain: "noctura",
+                icon: "🧦"
+            },
+            {
+                q: "Pierwsze zwierzątko Dr Noctury?",
+                a: "Żółw o imieniu Socky",
+                villain: "noctura",
+                icon: "🐢"
+            },
+            {
+                q: "Dokładny wzrost Dr Noctury?",
+                a: "1.53 m (153 cm)",
+                villain: "noctura",
+                icon: "📏"
+            },
+            {
+                q: "Imię panieńskie matki Dr Noctury?",
+                a: "Maureen",
+                villain: "noctura",
+                icon: "👩"
+            },
+
+            // KLAUS YOYODYNE JR.
+            {
+                q: "Skąd pochodzi Klaus Yoyodyne Jr.?",
+                a: "Yoyodone",
+                villain: "klaus",
+                icon: "❄️"
+            },
+            {
+                q: "Co sprawiło, że Klaus stał się zły?",
+                a: "Przedawkowanie kolęd bożonarodzeniowych",
+                villain: "klaus",
+                icon: "🎶"
+            },
+            {
+                q: "Ulubiona zabawka / maskotka Klausa?",
+                a: "Mścisław / Monty",
+                villain: "klaus",
+                icon: "🧸"
+            },
+            {
+                q: "Kogo Klaus namówił na bycie kominiarzem?",
+                a: "Ralf the Elf (Elf Ralf)",
+                villain: "klaus",
+                icon: "🧝"
+            },
+
+            // INNE / OGÓLNE
+            {
+                q: "Ile wynosi maksymalna liczba pięter w Kryjówce?",
+                a: "100 Pięter",
+                villain: "general",
+                icon: "🏢"
+            },
+            {
+                q: "Gdzie oprócz Skrzyń Epickich zdobędziesz Modyfikacje Legendarne?",
+                a: "W Akademii Bohaterów",
+                villain: "general",
+                icon: "🏛️"
+            },
+            {
+                q: "Czy zmiana ekwipunku po wejściu zmniejsza Twoje Max HP w Kryjówce?",
+                a: "NIE – max zdrowie zostaje zablokowane przy pierwszym wejściu!",
+                villain: "general",
+                icon: "🛡️"
+            }
+        ];
+
+        // Wyświetlanie Quizów
+        const quizContainer = document.getElementById('quizContainer');
+        const quizSearchInput = document.getElementById('quizSearchInput');
+        const heroSearchInput = document.getElementById('heroSearchInput');
+        const clearQuizSearch = document.getElementById('clearQuizSearch');
+        const villainButtons = document.querySelectorAll('.villain-btn');
+
+        let activeVillainFilter = 'all';
+
+        function renderQuizCards() {
+            const query = quizSearchInput.value.toLowerCase().trim();
+            quizContainer.innerHTML = '';
+
+            const filtered = quizDatabase.filter(item => {
+                const matchesFilter = (activeVillainFilter === 'all') || (item.villain === activeVillainFilter);
+                const matchesQuery = item.q.toLowerCase().includes(query) || item.a.toLowerCase().includes(query);
+                return matchesFilter && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                quizContainer.innerHTML = `
+                    <div class="col-span-full bg-slate-900 border-2 border-black rounded-2xl p-6 text-center text-slate-400">
+                        <div class="text-3xl mb-1">🔍</div>
+                        <p class="font-comic text-hzYellow text-base">Brak wyników w bazie!</p>
+                        <p class="text-xs">Spróbuj wpisać inną frazę (np. "skarpetki", "rybka", "zapałki").</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-900 border-2 border-black rounded-2xl p-4 shadow-comic flex flex-col justify-between gap-2 hover:border-hzYellow transition-all';
+                
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-xl">${item.icon}</span>
+                            <span class="text-[10px] font-black uppercase px-2 py-0.5 bg-slate-950 text-hzYellow rounded border border-black">${item.villain}</span>
+                        </div>
+                        <h4 class="font-bold text-white text-xs sm:text-sm leading-snug">${item.q}</h4>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 flex items-center justify-between gap-2">
+                        <div>
+                            <span class="text-[10px] text-hzGreen font-bold block uppercase">Odpowiedź:</span>
+                            <span class="font-bold text-hzYellow text-xs sm:text-sm">${item.a}</span>
+                        </div>
+                        <button onclick="copyAnswer('${item.a.replace(/'/g, "\\'")}')" aria-label="Kopiuj odpowiedź" class="px-2.5 py-1.5 bg-slate-800 hover:bg-hzYellow hover:text-black text-slate-300 rounded-lg border border-black text-xs font-bold transition-colors shrink-0 flex items-center gap-1">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                `;
+                quizContainer.appendChild(card);
+            });
+        }
+
+        // Kopiowanie do schowka
+        window.copyAnswer = function(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // Toast notification
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 z-50 bg-hzGreen text-black font-black px-4 py-2 rounded-xl border-2 border-black shadow-comic text-xs animate-bounce';
+            toast.innerHTML = 'Skopiowano odpowiedź!';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        quizSearchInput.addEventListener('input', () => {
+            clearQuizSearch.classList.toggle('hidden', quizSearchInput.value.length === 0);
+            renderQuizCards();
+        });
+
+        heroSearchInput.addEventListener('input', (e) => {
+            quizSearchInput.value = e.target.value;
+            clearQuizSearch.classList.toggle('hidden', e.target.value.length === 0);
+            renderQuizCards();
+        });
+
+        clearQuizSearch.addEventListener('click', () => {
+            quizSearchInput.value = '';
+            heroSearchInput.value = '';
+            clearQuizSearch.classList.add('hidden');
+            renderQuizCards();
+        });
+
+        villainButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                villainButtons.forEach(b => {
+                    b.classList.remove('bg-hzYellow', 'text-black', 'active');
+                    b.classList.add('bg-slate-800', 'text-slate-300');
+                });
+                btn.classList.remove('bg-slate-800', 'text-slate-300');
+                btn.classList.add('bg-hzYellow', 'text-black', 'active');
+                activeVillainFilter = btn.getAttribute('data-filter');
+                renderQuizCards();
+            });
+        });
+
+        renderQuizCards();
+
+
+        // ==========================================
+        // 3. KALKULATOR MATEMATYCZNY HP I STAMINY
+        // ==========================================
+        const calcInputStamina = document.getElementById('calcInputStamina');
+        const calcInputBooster = document.getElementById('calcInputBooster');
+        const calcInputGuild = document.getElementById('calcInputGuild');
+        const sliderHp = document.getElementById('sliderHp');
+        const sliderHpText = document.getElementById('sliderHpText');
+        const calcInputFloorRange = document.getElementById('calcInputFloorRange');
+
+        const resTotalStamina = document.getElementById('resTotalStamina');
+        const resMaxHp = document.getElementById('resMaxHp');
+        const resMissingHp = document.getElementById('resMissingHp');
+        const resTimeNeeded = document.getElementById('resTimeNeeded');
+        const resDonutsVal = document.getElementById('resDonutsVal');
+
+        function calculateHpMath() {
+            const stamina = parseFloat(calcInputStamina.value) || 0;
+            const booster = parseFloat(calcInputBooster.value) || 1.0;
+            const guild = parseFloat(calcInputGuild.value) || 1.0;
+            const hpPercent = parseInt(sliderHp.value);
+            const floorTier = parseInt(calcInputFloorRange.value);
+
+            sliderHpText.textContent = `${hpPercent}% HP`;
+
+            const totalStam = Math.round(stamina * booster * guild);
+            const maxHp = totalStam * 10; // Przelicznik silnika kryjówki 1 Stamina = 10 HP Kryjówki
+            const missingPercent = 100 - hpPercent;
+            const missingHp = Math.round(maxHp * (missingPercent / 100));
+
+            resTotalStamina.textContent = totalStam.toLocaleString();
+            resMaxHp.textContent = maxHp.toLocaleString() + ' HP';
+            resMissingHp.textContent = missingHp.toLocaleString() + ' HP';
+
+            // Czas regeneracji (10% max HP na godzinę = 6 minut na 1%)
+            const minutesNeeded = Math.round(missingPercent * 6);
+            const hrs = Math.floor(minutesNeeded / 60);
+            const mins = minutesNeeded % 60;
+
+            if (missingPercent === 0) {
+                resTimeNeeded.textContent = "Pełne HP (0 min)";
+            } else if (hrs === 0) {
+                resTimeNeeded.textContent = `~ ${mins} min.`;
+            } else {
+                resTimeNeeded.textContent = `~ ${hrs} godz. ${mins} min.`;
+            }
+
+            // Koszt oponek zależny od poziomu pięter i brakującego %
+            const baseDonutFactor = [2, 4, 7, 12][floorTier - 1];
+            const donutCost = Math.ceil((missingPercent / 10) * baseDonutFactor);
+            resDonutsVal.textContent = donutCost;
+        }
+
+        calcInputStamina.addEventListener('input', calculateHpMath);
+        calcInputBooster.addEventListener('change', calculateHpMath);
+        calcInputGuild.addEventListener('change', calculateHpMath);
+        sliderHp.addEventListener('input', calculateHpMath);
+        calcInputFloorRange.addEventListener('change', calculateHpMath);
+
+        calculateHpMath();
+
+
+        // ==========================================
+        // 4. DRZEWO DECYZYJNE POKOI (INTERAKTYWNE)
+        // ==========================================
+        const treeRoomType = document.getElementById('treeRoomType');
+        const treeHpState = document.getElementById('treeHpState');
+        const treeResultBox = document.getElementById('treeResultBox');
+
+        function updateDecisionTree() {
+            const room = treeRoomType.value;
+            const hp = treeHpState.value;
+
+            let title = "";
+            let advice = "";
+            let badge = "";
+
+            if (hp === 'low') {
+                if (room === 'minion' || room === 'elite' || room === 'boss') {
+                    badge = '<span class="px-2 py-0.5 bg-red-900 text-red-300 font-black rounded border border-red-700 text-xs">STOP! Wstrzymaj Atak</span>';
+                    title = "🚨 Wysokie Ryzyko Śmierci i Resetu!";
+                    advice = "Twój poziom HP jest krytycznie niski. Przegrana w tej walce zresetuje Twój postęp do 1. piętra. Odczekaj na pasywną regenerację lub wejdź do pokoju z quizem.";
+                } else if (room === 'panel') {
+                    badge = '<span class="px-2 py-0.5 bg-green-900 text-green-300 font-black rounded border border-green-700 text-xs">Zalecane Przejście</span>';
+                    title = "✅ Odpowiedz na Quiz w naszej Bazie!";
+                    advice = "Panel quizowy nie zabierze Ci HP, jeśli podasz bezbłędną odpowiedź z naszej bazy. To najbezpieczniejszy sposób na przeskoczenie pokoju!";
+                } else {
+                    badge = '<span class="px-2 py-0.5 bg-amber-900 text-amber-300 font-black rounded border border-amber-700 text-xs">Ostrożnie</span>';
+                    title = "📦 Otwórz tylko darmowe skrzynie";
+                    advice = "Skrzynie darmowe przywrócą Ci +5% HP. Jeśli skrzynia wymaga złotej karty, a masz mało HP, najpierw uzupełnij zdrowie.";
+                }
+            } else if (hp === 'medium') {
+                if (room === 'boss' || room === 'elite') {
+                    badge = '<span class="px-2 py-0.5 bg-amber-900 text-amber-300 font-black rounded border border-amber-700 text-xs">Uważaj na Statystyki</span>';
+                    title = "⚔️ Sprawdź Ekwipunek i Buff Kryta";
+                    advice = "Zanim zaatakujesz Bossa lub Elitarnego Wroga, przebierz się w swój najlepszy zestaw pod trafienie krytyczne i siłę. Jeśli wróg ma dużą przewagę, poczekaj do 100% HP.";
+                } else {
+                    badge = '<span class="px-2 py-0.5 bg-green-900 text-green-300 font-black rounded border border-green-700 text-xs">Zielone Światło</span>';
+                    title = "👍 Atakuj / Otwieraj Pokój";
+                    advice = "Twój zapas HP pozwala na bezpieczne pokonanie standardowego poplecznika.";
+                }
+            } else { // high HP
+                badge = '<span class="px-2 py-0.5 bg-green-900 text-green-300 font-black rounded border border-green-700 text-xs">Pełna Gotowość</span>';
+                title = "🚀 Czyść Pokój Bez Wahania!";
+                advice = "Twój pasek zdrowia jest pełny. To idealny moment na pokonywanie Bossów oraz czyszczenie pięter!";
+            }
+
+            treeResultBox.innerHTML = `
+                <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-2">
+                    <h4 class="font-comic text-base text-hzYellow">${title}</h4>
+                    ${badge}
+                </div>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${advice}</p>
+            `;
+        }
+
+        treeRoomType.addEventListener('change', updateDecisionTree);
+        treeHpState.addEventListener('change', updateDecisionTree);
+        updateDecisionTree();
+
+
+        // ==========================================
+        // 5. TRACKER 100 PIĘTER & LOCALSTORAGE CHECKLIST
+        // ==========================================
+        const initialChecklist = [
+            { id: 'c1', text: 'Założono ekwipunek na MAX Wytrzymałość (Staminę).' },
+            { id: 'c2', text: 'Aktywowano Booster Kondycji (+25% Staminy).' },
+            { id: 'c3', text: 'Sprawdzono i odebrano buffy gildyjne do statystyk.' },
+            { id: 'c4', text: 'Otwarto bazę pytań quizowych na drugim ekranie/telefonie.' },
+            { id: 'c5', text: 'Kliknięto "Wejdź" do Kryjówki (Max HP Zablokowane).' },
+            { id: 'c6', text: 'Przebrano postać w zestaw pod Obrażenia Krytyczne / Siłę.' }
+        ];
+
+        const checklistContainer = document.getElementById('checklistContainer');
+        const resetChecklistBtn = document.getElementById('resetChecklistBtn');
+
+        function loadSavedChecklist() {
+            const saved = localStorage.getItem('hz_checklist_2026');
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        function saveChecklist(state) {
+            localStorage.setItem('hz_checklist_2026', JSON.stringify(state));
+        }
+
+        function renderChecklist() {
+            const state = loadSavedChecklist();
+            checklistContainer.innerHTML = '';
+
+            initialChecklist.forEach(item => {
+                const isChecked = !!state[item.id];
+                const div = document.createElement('div');
+                div.className = `flex items-center gap-3 p-2.5 rounded-xl border-2 border-black cursor-pointer transition-all ${isChecked ? 'bg-green-950/40 border-hzGreen opacity-75' : 'bg-slate-950 hover:bg-slate-800'}`;
+                
+                div.innerHTML = `
+                    <input type="checkbox" id="${item.id}" ${isChecked ? 'checked' : ''} class="w-4 h-4 accent-hzYellow cursor-pointer">
+                    <label for="${item.id}" class="text-xs sm:text-sm font-semibold cursor-pointer ${isChecked ? 'line-through text-slate-400' : 'text-slate-200'}">${item.text}</label>
+                `;
+
+                div.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'INPUT') {
+                        const chk = div.querySelector('input');
+                        chk.checked = !chk.checked;
+                    }
+                    const chk = div.querySelector('input');
+                    state[item.id] = chk.checked;
+                    saveChecklist(state);
+                    renderChecklist();
+                });
+
+                checklistContainer.appendChild(div);
+            });
+        }
+
+        resetChecklistBtn.addEventListener('click', () => {
+            localStorage.removeItem('hz_checklist_2026');
+            renderChecklist();
+        });
+        renderChecklist();
+
+        // Floor Tracker
+        const currentFloorBadge = document.getElementById('currentFloorBadge');
+        const floorProgressBar = document.getElementById('floorProgressBar');
+        const milestoneBtns = document.querySelectorAll('.milestone-btn');
+
+        function loadSavedFloor() {
+            return parseInt(localStorage.getItem('hz_current_floor')) || 1;
+        }
+
+        function setFloor(floorNum) {
+            localStorage.setItem('hz_current_floor', floorNum);
+            currentFloorBadge.textContent = `${floorNum} / 100`;
+            floorProgressBar.style.width = `${floorNum}%`;
+        }
+
+        milestoneBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const floor = parseInt(btn.getAttribute('data-floor'));
+                setFloor(floor);
+            });
+        });
+
+        setFloor(loadSavedFloor());
+
+
+        // ==========================================
+        // 6. OBSŁUGU MENU MOBILNEGO
+        // ==========================================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
